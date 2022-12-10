@@ -8,6 +8,7 @@ class Sessions(models.Model):
     ]
     roomId = models.IntegerField(null=True)
     movieId = models.IntegerField(null=True)
+    internalSessionId = models.CharField(max_length=20, null=True)
     description = models.CharField(max_length=1000, null=True)
     accessibilityDescription = models.CharField(max_length=1000, null=True)
     sessionTime = models.DateTimeField(null=True)

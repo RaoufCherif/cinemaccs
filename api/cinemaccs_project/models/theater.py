@@ -4,7 +4,7 @@ from django.db import models
 class Theater(models.Model):
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
-    internal_id = models.CharField(max_length=10, null=True)
+    internalId = models.CharField(max_length=10, null=True)
     complexSlug = models.CharField(max_length=100, null=True)
     cinemaNationalId = models.IntegerField(null=True)
     address1 = models.CharField(max_length=300, null=True)
