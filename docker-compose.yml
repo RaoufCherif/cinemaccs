@@ -25,6 +25,20 @@ services:
       - cinemaccs_db
     env_file:
       - .env
+  cinemaccs_front:
+    restart: always
+    container_name: cinemaccs_front
+    build: ./front
+    # command: yarn start
+    volumes:
+      - ./front:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cinemaccs_db
+      - cinemaccs_api
+    env_file:
+      - .env
 
 volumes:
   cinemaccs_mariadb_data:
