@@ -31,7 +31,12 @@ services:
     build: ./front
     # command: yarn start
     volumes:
-      - ./front:/app
+      - ./front/public:/app/public
+      - ./front/src:/app/src
+      - ./front/package.json:/app/package.json
+      - ./front/yarn.lock:/app/yarn.lock
+      - ./front/tsconfig.json:/app/tsconfig.json
+      - ./front/Dockerfile:/app/Dockerfile
     ports:
       - "3000:3000"
     depends_on:
