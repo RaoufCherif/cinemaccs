@@ -15,14 +15,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./routes";
 import { Home } from "./Pages/Home";
 import { Movie } from "./Pages/Movie";
-import { Theater } from "./Pages/Theater";
+import { TheaterPage } from "./Pages/Theater";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path={routes.home} element={<Home />} />
-        <Route path={routes.theater} element={<Theater />} />
+        <Route path={routes.theater} element={<TheaterPage />} />
         <Route path={routes.movie} element={<Movie />} />
       </Routes>
     </BrowserRouter>

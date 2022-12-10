@@ -12,6 +12,7 @@ import {
   Avatar,
   FormControl,
 } from "@chakra-ui/react";
+
 const theaters = [
   {
     id: "1",
