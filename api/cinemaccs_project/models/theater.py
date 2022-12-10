@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Theater(models.Model):
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
@@ -16,6 +17,9 @@ class Theater(models.Model):
     isGiftStore = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=1000, null=True)
     accessibilityDescription = models.CharField(max_length=1000, null=True)
+    entryDescription = models.CharField(max_length=1000, null=True)
+    sanitaryDescription = models.CharField(max_length=1000, null=True)
+    popcornDescription = models.CharField(max_length=1000, null=True)
     publicTransport = models.CharField(max_length=300, null=True)
     currencyCode = models.CharField(max_length=100, null=True)
     allowPrintAtHomeBookings = models.CharField(max_length=10, null=True)
