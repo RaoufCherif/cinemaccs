@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  cinemaccs_db:
+    restart: always
+    image: mariadb
+    container_name: cinemaccs_db
+    volumes:
+      - cinemaccs_mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+
+  cinemaccs_api:
+    restart: always
+    container_name: cinemaccs_api
+    build: ./api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./api:/django
+    ports:
+      - "8000:8000"
+    depends_on:
+      - cinemaccs_db
+    env_file:
+      - .env
+
+volumes:
+  cinemaccs_mariadb_data:
