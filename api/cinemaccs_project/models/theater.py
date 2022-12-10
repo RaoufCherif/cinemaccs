@@ -9,6 +9,7 @@ class Theater(models.Model):
     address1 = models.CharField(max_length=300, null=True)
     address2 = models.CharField(max_length=300, null=True)
     city = models.CharField(max_length=100, null=True)
+    zipcode = models.IntegerField(null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     parkingInfo = models.CharField(max_length=300, null=True)
@@ -21,5 +22,6 @@ class Theater(models.Model):
     allowOnlineVoucherValidation = models.CharField(max_length=10, null=True)
     displaySofaSeats = models.CharField(max_length=10, null=True)
     timeZoneId = models.CharField(max_length=100, null=True)
-    insertDate = models.DateTimeField(auto_now_add=True, null=True)
+    createdDate = models.DateTimeField(auto_now_add=True, null=True)
+    modifiedDate = models.DateTimeField(auto_now=True, null=True)
     
