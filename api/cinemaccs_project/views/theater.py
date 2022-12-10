@@ -1,12 +1,21 @@
 from rest_framework import viewsets
-from cinemaccs_project.serializers import TheaterSerializer
+
+from cinemaccs_project.serializers import (
+    TheaterListSerializer, TheaterRetrieveSerializer
+)
 from cinemaccs_project.models import Theater
 
 
-class TheaterViewSet(viewsets.ModelViewSet):
+class TheaterViewset(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    A simple ViewSet for viewing accounts.
     """
-
     queryset = Theater.objects.all()
-    serializer_class = TheaterSerializer
+
+    serializer_classes = {
+        'list': TheaterListSerializer,
+        'retrieve': TheaterRetrieveSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializer_classes[self.action]
