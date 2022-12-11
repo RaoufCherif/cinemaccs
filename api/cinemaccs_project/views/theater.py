@@ -1,10 +1,10 @@
 from rest_framework import permissions
 from rest_framework import viewsets
 
+from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import (
     TheaterListSerializer, TheaterSerializer
 )
-from cinemaccs_project.models import Theater
 
 
 class TheaterViewSet(viewsets.ModelViewSet):
