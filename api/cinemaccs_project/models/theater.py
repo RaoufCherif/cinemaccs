@@ -28,4 +28,15 @@ class Theater(models.Model):
     timeZoneId = models.CharField(max_length=100, null=True)
     createdDate = models.DateTimeField(auto_now_add=True, null=True)
     modifiedDate = models.DateTimeField(auto_now=True, null=True)
-    
+
+    # room_set
+    # room_picture_set
+    # pictures
+
+    @property
+    def full_name(self):
+        return ' - '.join([self.company_name, self.name])
+
+    @property
+    def address(self):
+        return self.address1
