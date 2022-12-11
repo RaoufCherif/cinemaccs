@@ -1,3 +1,6 @@
+# Django migrations
+api/cinemaccs_project/migrations
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
