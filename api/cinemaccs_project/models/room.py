@@ -12,10 +12,12 @@ class Room(models.Model):
     accessPoint = models.CharField(
         max_length=10,
         choices=ACCESS_CHOICES,
-        null=True,        
+        null=True,
     )
     wheelchairSpaces = models.IntegerField(null=True)
     description = models.CharField(max_length=1000, null=True)
     accessibilityDescription = models.CharField(max_length=1000, null=True)
     createdDate = models.DateTimeField(auto_now_add=True, null=True)
     modifiedDate = models.DateTimeField(auto_now=True, null=True)
+
+    # pictures
