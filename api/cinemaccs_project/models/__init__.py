@@ -1,5 +1,5 @@
 from .description_element import DescriptionElement
-from .brand_logo import BrandLogo
+from .brand import Brand
 from .theater import Theater
 from .theater_picture import TheaterPicture
 from .room import Room
