@@ -18,12 +18,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from rest_framework import routers
 
-from cinemaccs_project.views.theater import TheaterViewSet
+from cinemaccs_project.views import TheaterViewSet, BrandViewSet
 from cinemaccs_project import settings
 
 router = routers.DefaultRouter()
 
 router.register(r"theater", TheaterViewSet, basename="theater")
+router.register(r"brand", BrandViewSet, basename="brand")
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

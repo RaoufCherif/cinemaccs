@@ -1,3 +1,4 @@
+from .brand_logo import BrandLogoSerializer
 from .description_element import DescriptionElementSerializer
 from .theater_picture import TheaterPictureSerializer
 from .theater import TheaterSerializer, TheaterListSerializer

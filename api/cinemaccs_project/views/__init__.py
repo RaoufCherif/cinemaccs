@@ -1,3 +1,7 @@
 from .theater import TheaterViewSet
+from .brand import BrandViewSet
 
-__all__ = ["TheaterViewSet"]
+__all__ = [
+    "TheaterViewSet",
+    "BrandViewSet"
+]

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import (
@@ -23,6 +24,12 @@ class TheaterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Theater
         fields = "__all__"
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Theater.objects.all(),
+                fields=['company_name', 'internal_id']
+            )
+        ]
 
 
 class TheaterListSerializer(serializers.HyperlinkedModelSerializer):

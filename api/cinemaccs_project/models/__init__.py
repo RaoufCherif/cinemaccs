@@ -15,5 +15,5 @@ __all__ = [
     "RoomPicture",
     "Session",
     "Room",
-    "BrandLogo"
+    "Brand"
 ]
