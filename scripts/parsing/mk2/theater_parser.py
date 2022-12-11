@@ -6,6 +6,15 @@ from bs4 import BeautifulSoup
 
 
 def call_website(url):
+    '''
+        GET data from a website, with multiple headers possible
+
+        input:
+            - url: url of the website, starting with http or https
+
+        output:
+            - content of the webpage
+    '''
 
     headers = [
         {"user-agent": "my-app/0.0.1"},
@@ -26,6 +35,14 @@ def call_website(url):
 
 
 def find_data_key(content):
+    '''
+        Retrieve the data key in the source code of the website
+
+        input:
+            - content: code source of the website
+        output:
+            - data key
+    '''
     soup = BeautifulSoup(content, features="html.parser")
     detect_data_key_path = [
         "_buildManifest.js",
