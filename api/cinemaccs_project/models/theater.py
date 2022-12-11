@@ -29,8 +29,7 @@ class Theater(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True, null=True)
     modifiedDate = models.DateTimeField(auto_now=True, null=True)
 
-    # room_set
-    # room_picture_set
+    # theater_picture_set
     # pictures
 
     @property

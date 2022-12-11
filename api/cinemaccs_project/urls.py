@@ -23,7 +23,7 @@ from cinemaccs_project import settings
 
 router = routers.DefaultRouter()
 
-router.register(r"theaters", TheaterViewSet, basename="theater")
+router.register(r"theater", TheaterViewSet, basename="theater")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

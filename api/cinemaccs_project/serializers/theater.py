@@ -4,7 +4,7 @@ from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import TheaterPictureSerializer
 
 
-class TheaterSerializer(serializers.ModelSerializer):
+class TheaterSerializer(serializers.HyperlinkedModelSerializer):
     full_name = serializers.Field(read_only=True)
     address = serializers.Field(read_only=True)
     pictures = TheaterPictureSerializer(many=True)
@@ -15,7 +15,7 @@ class TheaterSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class TheaterListSerializer(serializers.ModelSerializer):
+class TheaterListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Theater

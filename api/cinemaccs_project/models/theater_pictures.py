@@ -1,6 +1,9 @@
 from django.db import models
 
+from cinemaccs_project.models import Theater
 
-class TheaterPictures(models.Model):
-    theaterId = models.CharField(max_length=300, null=True)
-    picture = models.ImageField(upload_to="pictures/theaters", max_length=255, null=True) 
+
+class TheaterPicture(models.Model):
+    theater_id = models.ForeignKey(Theater, related_name='pictures', on_delete=models.CASCADE)
+    legend = models.CharField(max_length=1000, null=True)
+    photo = models.ImageField(upload_to="photos/theaters", max_length=255, null=True)
