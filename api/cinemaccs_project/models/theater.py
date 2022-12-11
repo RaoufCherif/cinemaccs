@@ -36,10 +36,10 @@ class Theater(models.Model):
     modified_date = models.DateTimeField(auto_now=True, null=True)
     logo = models.ForeignKey(BrandLogo, related_name='theaters', null=True, on_delete=models.CASCADE)
     description_elements = models.ManyToManyField(DescriptionElement)
+
     # theater_picture_set
     # pictures
 
-    # TODO: Add description rendering
     # TODO
     # # room_set
     # # rooms
