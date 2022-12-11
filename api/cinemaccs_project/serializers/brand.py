@@ -7,3 +7,4 @@ class BrandSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Brand
+        fields = '__all__'
