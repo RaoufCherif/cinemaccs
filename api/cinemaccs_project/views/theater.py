@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 from cinemaccs_project.serializers import (
-    TheaterListSerializer, TheaterRetrieveSerializer
+    TheaterListSerializer, TheaterSerializer
 )
 from cinemaccs_project.models import Theater
 
@@ -12,10 +12,13 @@ class TheaterViewset(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Theater.objects.all()
 
-    serializer_classes = {
+    default_serializer = TheaterSerializer
+
+    custom_serializer = {
         'list': TheaterListSerializer,
-        'retrieve': TheaterRetrieveSerializer,
     }
 
     def get_serializer_class(self):
-        return self.serializer_classes[self.action]
+        return self.custom_serializer.get(
+            self.action, self.default_serializer
+        )
