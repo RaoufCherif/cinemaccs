@@ -28,9 +28,15 @@ class Theater(models.Model):
     time_zone_id = models.CharField(max_length=100, null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)
+    # TODO: Add logo
+    # TODO: Add description rendering
 
     # theater_picture_set
     # pictures
+
+    # TODO
+    # # room_set
+    # # rooms
 
     @property
     def full_name(self):

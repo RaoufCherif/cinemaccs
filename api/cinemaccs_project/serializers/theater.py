@@ -8,7 +8,12 @@ class TheaterSerializer(serializers.HyperlinkedModelSerializer):
     full_name = serializers.Field(read_only=True)
     address = serializers.Field(read_only=True)
     pictures = TheaterPictureSerializer(many=True)
-    # Render accessibility text
+
+    # TODO: Render logo url
+    # TODO: Render description rendering
+    # TODO
+    # # room_set
+    # # rooms
 
     class Meta:
         model = Theater
@@ -16,6 +21,7 @@ class TheaterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TheaterListSerializer(serializers.HyperlinkedModelSerializer):
+    full_name = serializers.Field(read_only=True)
 
     class Meta:
         model = Theater
@@ -23,5 +29,4 @@ class TheaterListSerializer(serializers.HyperlinkedModelSerializer):
             "full_name",
             "address",
             "zipcode",
-            "logo"
         ]
