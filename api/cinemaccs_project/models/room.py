@@ -7,17 +7,17 @@ class Room(models.Model):
         ('middle', 'middle'),
         ('top', 'top'),
     ]
-    internalRoomId = models.CharField(max_length=20, null=True)
+    internal_room_id = models.CharField(max_length=20, null=True)
     seats = models.IntegerField(null=True)
-    accessPoint = models.CharField(
+    access_point = models.CharField(
         max_length=10,
         choices=ACCESS_CHOICES,
         null=True,
     )
-    wheelchairSpaces = models.IntegerField(null=True)
+    wheelchair_spaces = models.IntegerField(null=True)
     description = models.CharField(max_length=1000, null=True)
-    accessibilityDescription = models.CharField(max_length=1000, null=True)
-    createdDate = models.DateTimeField(auto_now_add=True, null=True)
-    modifiedDate = models.DateTimeField(auto_now=True, null=True)
+    accessibility_description = models.CharField(max_length=1000, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    modified_date = models.DateTimeField(auto_now=True, null=True)
 
     # pictures
