@@ -12,7 +12,7 @@ class TheaterViewSet(viewsets.ModelViewSet):
     The theater viewset that give a lightweight
     json when list is asked.
     """
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     queryset = Theater.objects.all()
 
