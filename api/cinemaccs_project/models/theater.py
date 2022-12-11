@@ -1,7 +1,13 @@
 from django.db import models
 
+from cinemaccs_project.models import BrandLogo, DescriptionElement
+
 
 class Theater(models.Model):
+
+    class Meta:
+        ordering = ['zipcode']
+
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
     internal_id = models.CharField(max_length=10, null=True)
@@ -28,12 +34,12 @@ class Theater(models.Model):
     time_zone_id = models.CharField(max_length=100, null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)
-    # TODO: Add logo
-    # TODO: Add description rendering
-
+    logo = models.ForeignKey(BrandLogo, related_name='theaters', null=True, on_delete=models.CASCADE)
+    description_elements = models.ManyToManyField(DescriptionElement, null=True)
     # theater_picture_set
     # pictures
 
+    # TODO: Add description rendering
     # TODO
     # # room_set
     # # rooms
@@ -45,3 +51,14 @@ class Theater(models.Model):
     @property
     def address(self):
         return self.address_1
+
+    @property
+    def description_elements_kwargs(self):
+        # Suppose a prefetch
+        return {
+            e.id: e.text for e in self.description_elements
+        }
+
+    @property
+    def accessibility_description(self):
+        return
