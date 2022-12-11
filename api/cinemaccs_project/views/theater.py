@@ -7,7 +7,7 @@ from cinemaccs_project.serializers import (
 from cinemaccs_project.models import Theater
 
 
-class TheaterViewset(viewsets.ModelViewSet):
+class TheaterViewSet(viewsets.ModelViewSet):
     """
     The theater viewset that give a lightweight
     json when list is asked.

@@ -5,8 +5,8 @@ from cinemaccs_project.serializers import TheaterPictureSerializer
 
 
 class TheaterSerializer(serializers.HyperlinkedModelSerializer):
-    full_name = serializers.Field(read_only=True)
-    address = serializers.Field(read_only=True)
+    full_name = serializers.Field()
+    address = serializers.Field()
     pictures = TheaterPictureSerializer(many=True)
 
     # TODO: Render logo url
@@ -21,7 +21,7 @@ class TheaterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TheaterListSerializer(serializers.HyperlinkedModelSerializer):
-    full_name = serializers.Field(read_only=True)
+    full_name = serializers.Field()
 
     class Meta:
         model = Theater
