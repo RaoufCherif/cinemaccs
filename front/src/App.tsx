@@ -13,9 +13,9 @@ import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { Logo } from "./Logo";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./routes";
-import { Home } from "./Pages/Home";
-import { Movie } from "./Pages/Movie";
-import { TheaterPage } from "./Pages/Theater";
+import { Home } from "./pages/Home";
+import { Movie } from "./pages/Movie";
+import { TheaterPage } from "./pages/Theater";
 
 export const App = () => (
   <ChakraProvider theme={theme}>

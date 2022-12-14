@@ -14,9 +14,9 @@ import {
 import { sampleImage } from "../sample_image";
 import { Theater, MovieRoom, Day } from "./types";
 
-function onlyUnique<T>(value: T, index: number, self: T[]): boolean {
-  return self.indexOf(value) === index;
-}
+// function onlyUnique<T>(value: T, index: number, self: T[]): boolean {
+//   return self.indexOf(value) === index;
+// }
 
 const movie_room = {
   movie: {
