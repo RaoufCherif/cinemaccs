@@ -12,6 +12,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { sampleImage } from "../sample_image";
+import { Theater, MovieRoom, Day } from "./types";
 
 function onlyUnique<T>(value: T, index: number, self: T[]): boolean {
   return self.indexOf(value) === index;
@@ -69,9 +70,7 @@ const theater = {
     "La salle est plutôt accessible mais les escaliers sont un peu raides. Si vous faites de l'escalade ca devrait aller mais sinon partez plutôt sur l'option home cinema",
   photos: [sampleImage, sampleImage, sampleImage],
   movies_rooms: [movie_room, movie_room, movie_room],
-};
-
-type Theater = typeof theater;
+} as Theater;
 
 const TheaterCard: React.FC<{ theater: Theater }> = ({ theater }) => {
   return (
@@ -98,7 +97,7 @@ const TheaterCard: React.FC<{ theater: Theater }> = ({ theater }) => {
   );
 };
 
-const MovieCard: React.FC<{ movieRoom: typeof movie_room; day: string }> = ({
+const MovieCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
   movieRoom,
   day,
 }) => {
@@ -163,7 +162,11 @@ export const TheaterPage = () => {
               {uniqueDays.map((day, idx) => (
                 <TabPanel key={`tabpanel-${idx}`}>
                   {theater.movies_rooms.map((mr, idx) => (
-                    <MovieCard key={`movie-${idx}`} movieRoom={mr} day={day} />
+                    <MovieCard
+                      key={`movie-${idx}`}
+                      movieRoom={mr}
+                      day={day as Day}
+                    />
                   ))}
                 </TabPanel>
               ))}
