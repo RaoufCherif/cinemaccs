@@ -26,6 +26,7 @@ services:
       - cinemaccs_db
     env_file:
       - .env
+      
   cinemaccs_front:
     restart: always
     container_name: cinemaccs_front
@@ -40,6 +41,20 @@ services:
       - ./front/Dockerfile:/app/Dockerfile
     ports:
       - "3000:3000"
+    depends_on:
+      - cinemaccs_db
+      - cinemaccs_api
+    env_file:
+      - .env
+
+  cinemaccs_dagster:
+    restart: always
+    container_name: cinemaccs_dagster
+    build: ./scripts
+    volumes:
+      - ./scripts:/dagster
+    ports:
+      - "3010:3000"
     depends_on:
       - cinemaccs_db
       - cinemaccs_api

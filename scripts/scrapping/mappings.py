@@ -1,4 +1,14 @@
 def remap_keys(json, MAP, discard=False):
+    """
+    Remapping a JSON
+
+    input:
+        - json: json we want to remap
+        - MAP: New mapping we want to apply to the json
+        - discard (optional): we keep only the fields in the MAP
+    output:
+        - json remapped
+    """
     if isinstance(json, dict):
         if discard:
             return {
@@ -28,4 +38,21 @@ MAP_THEATER = {
     "allowOnlineVoucherValidation": "allow_on_line_voucher_validation",
     "displaySofaSeats": "display_sofa_seats",
     "timeZoneId": "time_zone_id",
+}
+
+MAP_MOVIE = {
+    "title": "title",
+    "runTime": "duration",
+    "graphicUrl": "poster",
+    "openingDate": "release_date",
+    "synopsis": "synopsis",
+    "id": "id", ## Id côté MK2
+    "slug": "slug" ## Nom de la page des infos du film côté MK2
+}
+
+MAP_SESSION = {
+    "room_id": "room_id",
+    "movie_id" : "movie_id",
+    "id": "internal_session_id",
+    "description" : "description",
 }

@@ -39,7 +39,7 @@ def find_data_key(content):
     Retrieve the data key in the source code of the website
 
     input:
-        - content: code source of the website
+        - content: source code of the website
     output:
         - data key
     """
@@ -64,10 +64,10 @@ def find_data_key(content):
 
 def list_all_movies(content):
     """
-    Retrieve all the movies in the code source
+    Retrieve all the movies in the source code
 
     input:
-        - content: code source of the website
+        - content: source code of the website
     output:
         - list of movie names
     """
@@ -81,3 +81,32 @@ def list_all_movies(content):
             movie_name.reverse()
             list_movies.append(movie_name[0])
     return list_movies
+
+def get_movies_session(url, movie_name):
+    """
+    GET movie sessions
+
+    input:
+        - url: url of the website, starting with http or https
+        - movie_name: movie name in lower in the URL
+
+    output:
+        - movie data
+    """
+
+    headers = [
+        {"user-agent": "my-app/0.0.1"},
+    ]
+
+    is_finished = False
+    i = random.randint(0, len(headers) - 1)
+    response = httpx.get(f"{url}/{movie_name}", headers=headers[i])
+
+    if response.status_code == 200:
+        is_finished = True
+        return response.text
+
+    if is_finished == False:
+        sys.exit(
+            f"{datetime.datetime.now()} - ERROR - Cannot access {url} : {response}"
+        )
