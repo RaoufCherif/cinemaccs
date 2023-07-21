@@ -14,7 +14,7 @@ import { Logo } from "./Logo";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./routes";
 import { Home } from "./pages/Home";
-import { Movie } from "./pages/Movie";
+import { MoviePage } from "./pages/Movie";
 import { TheaterPage } from "./pages/Theater";
 
 export const App = () => (
@@ -23,7 +23,7 @@ export const App = () => (
       <Routes>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.theater} element={<TheaterPage />} />
-        <Route path={routes.movie} element={<Movie />} />
+        <Route path={routes.movie} element={<MoviePage />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>

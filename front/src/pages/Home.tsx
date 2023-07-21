@@ -71,7 +71,7 @@ export const Home = () => {
           >
             {theaters ? (
               theaters.map((theater) => (
-                <Link href={`/cinema/${theater.id}`}>
+                <Link key={theater.id} href={`/cinema/${theater.id}`}>
                   {theater.name}, {theater.address}
                 </Link>
               ))
