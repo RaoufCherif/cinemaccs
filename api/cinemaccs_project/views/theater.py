@@ -3,15 +3,16 @@ from rest_framework import viewsets
 
 from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import (
-    TheaterListSerializer, TheaterSerializer
+    TheaterListSerializer, TheaterSerializer, DefaultCustomMixin
 )
 
 
-class TheaterViewSet(viewsets.ModelViewSet):
+class TheaterViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
     """
     The theater viewset that give a lightweight
     json when list is asked.
     """
+
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     queryset = Theater.objects.all()
