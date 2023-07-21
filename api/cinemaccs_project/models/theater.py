@@ -1,14 +1,14 @@
-from django.db import models
-
 from cinemaccs_project.models import Brand, DescriptionElement
+from django.db import models
 
 
 class Theater(models.Model):
-
     class Meta:
-        ordering = ['zipcode']
+        ordering = ["zipcode"]
 
-    brand = models.ForeignKey(Brand, related_name='theaters', null=True, on_delete=models.CASCADE)
+    brand = models.ForeignKey(
+        Brand, related_name="theaters", null=True, on_delete=models.CASCADE
+    )
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
     internal_id = models.CharField(max_length=10, null=True)
@@ -46,7 +46,7 @@ class Theater(models.Model):
 
     @property
     def full_name(self):
-        return ' - '.join([self.company_name, self.name])
+        return " - ".join([self.company_name, self.name])
 
     @property
     def address(self):
@@ -55,9 +55,7 @@ class Theater(models.Model):
     @property
     def description_elements_kwargs(self):
         # Suppose a prefetch
-        return {
-            e.id: e.text for e in self.description_elements
-        }
+        return {e.id: e.text for e in self.description_elements}
 
     @property
     def accessibility_description(self):

@@ -19,6 +19,7 @@ def remap_keys(json, MAP, discard=False):
         return [remap_keys(j, MAP, discard) for j in json]
     return json
 
+
 MAP_THEATER = {
     "name": "name",
     "id": "internal_id",
@@ -46,13 +47,13 @@ MAP_MOVIE = {
     "graphicUrl": "poster",
     "openingDate": "release_date",
     "synopsis": "synopsis",
-    "id": "id", ## Id côté MK2
-    "slug": "slug" ## Nom de la page des infos du film côté MK2
+    "id": "id",  ## Id côté MK2
+    "slug": "slug",  ## Nom de la page des infos du film côté MK2
 }
 
 MAP_SESSION = {
     "room_id": "room_id",
-    "movie_id" : "movie_id",
+    "movie_id": "movie_id",
     "id": "internal_session_id",
-    "description" : "description",
+    "description": "description",
 }

@@ -3,9 +3,9 @@ from django.db import models
 
 class Room(models.Model):
     ACCESS_CHOICES = [
-        ('bottom', 'bottom'),
-        ('middle', 'middle'),
-        ('top', 'top'),
+        ("bottom", "bottom"),
+        ("middle", "middle"),
+        ("top", "top"),
     ]
     internal_room_id = models.CharField(max_length=20, null=True)
     seats = models.IntegerField(null=True)

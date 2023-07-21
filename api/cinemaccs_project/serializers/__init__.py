@@ -1,10 +1,8 @@
-from .mixins import ExtraFieldMixin
-
 from .brand import BrandSerializer
 from .description_element import DescriptionElementSerializer
+from .mixins import ExtraFieldMixin
+from .theater import TheaterListSerializer, TheaterSerializer
 from .theater_picture import TheaterPictureSerializer
-from .theater import TheaterSerializer, TheaterListSerializer
-
 
 __all__ = [
     "BrandSerializer",

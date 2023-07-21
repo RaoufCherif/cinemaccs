@@ -64,7 +64,7 @@ const MovieCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
                   <Text>{session.language}</Text>
                   <Text>{session.time}</Text>
                 </Box>
-              )
+              ),
           )}
         </Flex>
       </Box>

@@ -1,7 +1,8 @@
-import httpx
-import sys
 import datetime
 import random
+import sys
+
+import httpx
 from bs4 import BeautifulSoup
 
 
@@ -81,6 +82,7 @@ def list_all_movies(content):
             movie_name.reverse()
             list_movies.append(movie_name[0])
     return list_movies
+
 
 def get_movies_session(url, movie_name):
     """
