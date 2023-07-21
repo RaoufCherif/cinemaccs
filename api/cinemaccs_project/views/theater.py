@@ -1,9 +1,10 @@
-from rest_framework import permissions
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 
 from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import (
-    TheaterListSerializer, TheaterSerializer, DefaultCustomMixin
+    TheaterListSerializer,
+    TheaterSerializer,
+    DefaultCustomMixin
 )
 
 
@@ -19,5 +20,5 @@ class TheaterViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
 
     default_serializer = TheaterSerializer
     custom_serializer = {
-        'list': TheaterListSerializer,
+        "list": TheaterListSerializer,
     }

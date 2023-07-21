@@ -1,12 +1,11 @@
-from .mixins import ExtraFieldMixin
 from .brand import BrandSerializer
 from .description_element import DescriptionElementSerializer
-from .room import RoomSerializerNoTheater, RoomSerializer
+from .mixins import ExtraFieldMixin  # noqa
+from .room import RoomSerializerNoTheater  # noqa
+from .room import RoomSerializer
 from .room_picture import RoomPictureSerializer
-from .theater import (
-    TheaterSerializer, TheaterSerializerNoRooms,
-    TheaterListSerializer
-)
+from .theater import TheaterSerializerNoRooms  # noqa
+from .theater import TheaterSerializer, TheaterListSerializer
 from .theater_picture import TheaterPictureSerializer
 
 

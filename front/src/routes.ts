@@ -4,6 +4,7 @@ const routes = {
   home: "/",
   theater: "/cinema/:id",
   movie: "/film/:id",
+  room: "/salle/:id",
 };
 
 export default routes;

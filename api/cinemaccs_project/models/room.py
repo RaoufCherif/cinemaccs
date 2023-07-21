@@ -5,9 +5,9 @@ from cinemaccs_project.models import Theater, DescriptionElement
 class Room(models.Model):
 
     ACCESS_CHOICES = [
-        ('bottom', 'bottom'),
-        ('middle', 'middle'),
-        ('top', 'top'),
+        ("bottom", "bottom"),
+        ("middle", "middle"),
+        ("top", "top"),
     ]
 
     theater = models.ForeignKey(

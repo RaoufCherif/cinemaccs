@@ -69,11 +69,15 @@ export const Home = () => {
             backgroundColor="whiteAlpha.900"
             boxShadow="md"
           >
-            {theaters.map((theater) => (
-              <Link href={`/cinema/${theater.id}`}>
-                {theater.name}, {theater.address}
-              </Link>
-            ))}
+            {theaters ? (
+              theaters.map((theater) => (
+                <Link key={theater.id} href={`/cinema/${theater.id}`}>
+                  {theater.name}, {theater.address}
+                </Link>
+              ))
+            ) : (
+              <div>Aucun résultat</div>
+            )}
           </Stack>
         </Box>
       </Stack>

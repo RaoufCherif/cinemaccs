@@ -26,7 +26,7 @@ services:
       - cinemaccs_db
     env_file:
       - .env
-      
+
   cinemaccs_front:
     restart: always
     container_name: cinemaccs_front

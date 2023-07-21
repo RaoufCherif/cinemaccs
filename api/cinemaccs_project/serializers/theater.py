@@ -1,22 +1,25 @@
-from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
-
 from cinemaccs_project.models import Theater
 from cinemaccs_project.serializers import (
-    BrandSerializer, TheaterPictureSerializer,
-    DescriptionElementSerializer, RoomSerializerNoTheater,
-    ExtraFieldMixin
+    BrandSerializer,
+    DescriptionElementSerializer,
+    ExtraFieldMixin,
+    RoomSerializerNoTheater,
+    TheaterPictureSerializer,
 )
+from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 
 class TheaterSerializerNoRooms(
     ExtraFieldMixin, serializers.HyperlinkedModelSerializer
 ):
+
     full_name = serializers.ReadOnlyField()
     address = serializers.ReadOnlyField()
     accessibility_description = serializers.ReadOnlyField()
 
     brand = BrandSerializer(read_only=True)
+
     pictures = TheaterPictureSerializer(many=True, read_only=True)
 
     description_elements = DescriptionElementSerializer(
@@ -25,12 +28,12 @@ class TheaterSerializerNoRooms(
 
     class Meta:
         model = Theater
-        fields = '__all__'
-        extra_fields = ['id']
+        fields = "__all__"
+        extra_fields = ["id"]
         validators = [
             UniqueTogetherValidator(
                 queryset=Theater.objects.all(),
-                fields=['company_name', 'internal_id']
+                fields=["company_name", "internal_id"]
             )
         ]
 

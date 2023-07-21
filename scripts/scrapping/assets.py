@@ -1,19 +1,20 @@
+import json
+
+import httpx
+import pandas as pd
 from dagster import (
+    DailyPartitionsDefinition,
+    Definitions,
+    Failure,
+    MetadataValue,
+    Output,
+    SkipReason,
     asset,
     get_dagster_logger,
-    Definitions,
-    DailyPartitionsDefinition,
-    Output,
-    MetadataValue,
-    SkipReason,
-    Failure,
 )
-import json
-import pandas as pd
-from .modules import call_website, find_data_key, list_all_movies, get_movies_session
-from .mappings import MAP_THEATER, remap_keys, MAP_MOVIE, MAP_SESSION
-import httpx
 
+from .mappings import MAP_MOVIE, MAP_SESSION, MAP_THEATER, remap_keys
+from .modules import call_website, find_data_key, get_movies_session, list_all_movies
 
 logger = get_dagster_logger()
 mk2_home = "https://www.mk2.com"
@@ -21,11 +22,13 @@ all_movies = "https://www.mk2.com/films/tous-les-films"
 api_url = "http://localhost:8000/api"
 movie_url = "https://prod-paris.api.mk2.com/films"
 
+
 @asset(group_name="all", description="Get MK2 DataKey")
 def getMK2DataKey():
     mk2_home_content = call_website(mk2_home)
     data_key = find_data_key(mk2_home_content)
     return data_key
+
 
 @asset(group_name="theaters", description="Scrape mk2 theaters")
 def scrapeMK2Theaters(getMK2DataKey):
@@ -42,6 +45,7 @@ def scrapeMK2Theaters(getMK2DataKey):
         },
     )
 
+
 @asset(group_name="theaters", description="Upload Theaters with the API")
 def uploadMK2Theaters(scrapeMK2Theaters):
     for i in range(len(scrapeMK2Theaters)):
@@ -49,6 +53,7 @@ def uploadMK2Theaters(scrapeMK2Theaters):
         theater_post["company_name"] = "MK2"
         r = httpx.post(f"{api_url}/theater/", data=theater_post)
         logger.info(r.text)
+
 
 @asset(group_name="movies", description="Scrape mk2 movies")
 def scrapeMK2Movies(getMK2DataKey):
@@ -58,7 +63,7 @@ def scrapeMK2Movies(getMK2DataKey):
     """
     all_movies_content = call_website(all_movies)
     list_of_movies = list_all_movies(all_movies_content)
-    allMovies=[]
+    allMovies = []
     for i in range(len(list_of_movies)):
         movie_json = json.loads(
             call_website(
@@ -75,6 +80,7 @@ def scrapeMK2Movies(getMK2DataKey):
         },
     )
 
+
 @asset(group_name="movies", description="Upload Movies with the API")
 def uploadMK2Movies(scrapeMK2Movies):
     for i in range(len(scrapeMK2Movies)):
@@ -82,6 +88,7 @@ def uploadMK2Movies(scrapeMK2Movies):
         movie_post["company_name"] = "MK2"
         r = httpx.post(f"{api_url}/movie/", data=movie_post)
         logger.info(r.text)
+
 
 @asset(group_name="movies", description="Get mk2 movies sessions")
 def getMK2Sessions(scrapeMK2Movies):
@@ -92,10 +99,12 @@ def getMK2Sessions(scrapeMK2Movies):
     """
     for i in range(len(scrapeMK2Movies)):
         logger.info(f"----- {scrapeMK2Movies[i]['slug']} -----")
-        movie_sessions = json.loads(get_movies_session(movie_url, scrapeMK2Movies[i]["slug"]))
+        movie_sessions = json.loads(
+            get_movies_session(movie_url, scrapeMK2Movies[i]["slug"])
+        )
         movie_sessions_cinema = movie_sessions.get("sessionsByCinema")
         for j in range(len(movie_sessions_cinema)):
-            #logger.info(movie_sessions_cinema[j])
+            # logger.info(movie_sessions_cinema[j])
             df = pd.DataFrame(movie_sessions_cinema[j].get("sessions"))
             # Il y a l'id du cinéma dans le sessions (cinemaId)
             # Il y a plusieurs attributs, regarder le "shortname" de ces attributs qui correspond aux infos comme 2D, VF
