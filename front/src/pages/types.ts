@@ -29,6 +29,9 @@ export type Room = {
   name: string;
   accessibility_description: string;
 };
+export type RoomWithTheaters = Room & {
+  theater: TheaterBase;
+};
 export type RoomWithSessions = Room & {
   sessions: Session[];
 };
@@ -40,13 +43,15 @@ export type MovieRoom = {
 type TheaterBase = {
   id: number;
   name: string;
-};
-export type Theater = TheaterBase & {
   address: string;
   accessibility_description: string;
   photos: string[];
+};
+export type Theater = TheaterBase & {
   movies_rooms: MovieRoom[];
 };
-export type TheaterWithRooms = TheaterBase & {
+export type TheaterWithRooms = {
+  id: number;
+  name: string;
   rooms: RoomWithSessions[];
 };

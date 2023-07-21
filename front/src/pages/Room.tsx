@@ -1,13 +1,9 @@
-import { useGetMovie } from "../data/movie";
 import { Flex, Box, Stack, Image, Link } from "@chakra-ui/react";
 
-import { MovieWithTheaters, Room, Session, Theater } from "./types";
-import { useEffect, useState } from "react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { useGetRoom } from "../data/room";
 
 export const RoomPage = () => {
-  //   const { data: room } = useGetRoom();
-  const room = "toto";
+  const { data: room } = useGetRoom();
   return (
     <Flex
       flexDirection="column"

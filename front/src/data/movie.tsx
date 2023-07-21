@@ -18,7 +18,7 @@ const movie = {
   ],
 } as MovieWithTheaters;
 
-const getMovieKey = (): APIQueryKey => ["get_movie_detail"];
+const getMovieKey = (): APIQueryKey => ["get_movie_details"];
 // const fetchTheaters = async (): Promise<Theater[]> => theaters;
 const fetchMovie = (): MovieWithTheaters => movie;
 export const useGetMovie = (): UseQueryResult<MovieWithTheaters> => {
