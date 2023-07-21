@@ -9,9 +9,10 @@ class Theater(models.Model):
         ordering = ['zipcode']
 
     brand = models.ForeignKey(Brand, related_name='theaters', null=True, on_delete=models.CASCADE)
+
+    internal_id = models.CharField(max_length=10, null=True)
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
-    internal_id = models.CharField(max_length=10, null=True)
     complex_slug = models.CharField(max_length=100, null=True)
     cinema_national_id = models.IntegerField(null=True)
     address_1 = models.CharField(max_length=300, null=True)
@@ -22,27 +23,30 @@ class Theater(models.Model):
     longitude = models.FloatField(null=True)
     parking_info = models.CharField(max_length=300, null=True)
     is_gift_store = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=1000, null=True)
-    accessibility_description = models.CharField(max_length=1000, null=True)
-    entry_description = models.CharField(max_length=1000, null=True)
-    sanitary_description = models.CharField(max_length=1000, null=True)
-    popcorn_description = models.CharField(max_length=1000, null=True)
     public_transport = models.CharField(max_length=300, null=True)
     currency_code = models.CharField(max_length=100, null=True)
     allow_print_at_home_bookings = models.CharField(max_length=10, null=True)
     allow_on_line_voucher_validation = models.CharField(max_length=10, null=True)
     display_sofa_seats = models.CharField(max_length=10, null=True)
     time_zone_id = models.CharField(max_length=100, null=True)
+
+    accessibility_description = models.CharField(max_length=1000, null=True)
+    entry_description = models.CharField(max_length=1000, null=True)
+    sanitary_description = models.CharField(max_length=1000, null=True)
+    popcorn_description = models.CharField(max_length=1000, null=True)
+
+    description = models.CharField(max_length=1000, null=True)
+    description_elements = models.ManyToManyField(DescriptionElement)
+
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)
-    description_elements = models.ManyToManyField(DescriptionElement)
+
 
     # theater_picture_set
     # pictures
 
-    # TODO
-    # # room_set
-    # # rooms
+    # room_set
+    # rooms
 
     @property
     def full_name(self):
@@ -61,4 +65,7 @@ class Theater(models.Model):
 
     @property
     def accessibility_description(self):
-        return
+        return (
+            self.description + '\n'
+            + ' '.join([v for _, v in self.description_elements_kwargs])
+        )
