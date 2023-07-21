@@ -21,8 +21,3 @@ class TheaterViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
     custom_serializer = {
         'list': TheaterListSerializer,
     }
-
-    def get_serializer_class(self):
-        return self.custom_serializer.get(
-            self.action, self.default_serializer
-        )
