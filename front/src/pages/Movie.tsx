@@ -3,6 +3,7 @@ import { Flex, Box, Stack, Image, Link } from "@chakra-ui/react";
 
 import { MovieWithTheaters, Room, Session, Theater } from "./types";
 import { useEffect, useState } from "react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 type SessionEnriched = Session & {
   theater_id: number;
@@ -23,6 +24,7 @@ const MovieCard: React.FC<{ movie: MovieWithTheaters }> = ({ movie }) => {
           <Box>{movie.duration}</Box>
           <Link href={`${movie.allocine_link}`} isExternal>
             Lien vers allocine
+            <ExternalLinkIcon mx={1} />
           </Link>
         </Flex>
       </Flex>
