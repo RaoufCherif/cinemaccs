@@ -1,7 +1,19 @@
 import { useGetMovie } from "../data/movie";
-import { Flex, Box, Stack, Image, Link, Spinner } from "@chakra-ui/react";
+import {
+  Card,
+  Text,
+  Box,
+  Stack,
+  Image,
+  Link,
+  Spinner,
+  CardBody,
+  CardFooter,
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 
-import { MovieWithTheaters, Room, Session, Theater } from "./types";
+import { MovieWithTheaters, Session } from "./types";
 import { useEffect, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { PageLayout } from "../components/PageLayout";
@@ -17,19 +29,35 @@ type SessionEnriched = Session & {
 
 const MovieCard: React.FC<{ movie: MovieWithTheaters }> = ({ movie }) => {
   return (
-    <Box>
-      <Flex>
-        <Image src={`data:image/jpeg;base64, ${movie.poster}`} />
-        <Flex ml={2} flexDir="column">
-          <Box>{movie.title}</Box>
-          <Box>{movie.duration}</Box>
+    <Card
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+    >
+      <Image
+        objectFit="cover"
+        maxW={{ base: "100%", sm: "200px" }}
+        src={`data:image/jpeg;base64, ${movie.poster}`}
+        alt="Caffe Latte"
+      />
+
+      <Stack>
+        <CardBody>
+          <Heading size="md">{movie.title}</Heading>
+          <Text py="2">{movie.duration}</Text>
           <Link href={`${movie.allocine_link}`} isExternal>
             Lien vers allocine
             <ExternalLinkIcon mx={1} />
           </Link>
-        </Flex>
-      </Flex>
-    </Box>
+        </CardBody>
+
+        <CardFooter>
+          <Button variant="solid" colorScheme="blue">
+            Buy Latte
+          </Button>
+        </CardFooter>
+      </Stack>
+    </Card>
   );
 };
 export const MoviePage = () => {

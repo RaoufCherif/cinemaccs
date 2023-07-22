@@ -1,5 +1,10 @@
 import * as React from "react";
 import {
+  Card,
+  CardBody,
+  CardFooter,
+  Button,
+  Heading,
   Text,
   Flex,
   Box,
@@ -48,17 +53,23 @@ const MovieCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
   const { movie, room, sessions } = movieRoom;
 
   return (
-    <Flex mb={2}>
+    <Card
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+    >
       <Image
-        mr={3}
-        maxW="70px"
+        objectFit="cover"
+        maxW={{ base: "100%", sm: "200px" }}
         src={`data:image/jpeg;base64, ${movie.poster}`}
+        alt="Caffe Latte"
       />
-      <Box>
-        <Text>
-          {movie.title} - {room.name}
-        </Text>
-        <Flex>
+
+      <Stack>
+        <CardBody>
+          <Heading size="md">
+            {movie.title} - {room.name}
+          </Heading>
           {sessions.map(
             (session, idx) =>
               session.day === day && (
@@ -68,9 +79,15 @@ const MovieCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
                 </Box>
               ),
           )}
-        </Flex>
-      </Box>
-    </Flex>
+        </CardBody>
+
+        <CardFooter>
+          <Button variant="solid" colorScheme="blue">
+            Buy Latte
+          </Button>
+        </CardFooter>
+      </Stack>
+    </Card>
   );
 };
 export const TheaterPage = () => {
