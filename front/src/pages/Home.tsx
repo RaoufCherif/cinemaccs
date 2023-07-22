@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import {
   Flex,
   Heading,
@@ -15,10 +16,30 @@ import {
 import { useGetTheaters } from "../data/theater";
 import { PageLayout } from "../components/PageLayout";
 import { useGetSearchMovies } from "../data/movie";
+import { Theater } from "./types";
 
 export const HomePage = () => {
   const { data: theaters } = useGetTheaters();
   const { data: movies } = useGetSearchMovies();
+  const [filteredTheaters, setFilteredTheaters] = useState<Theater[]>(
+    theaters || [],
+  );
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
+    if (search) {
+      const newFilteredTheaters = theaters
+        ? theaters.filter((theater) =>
+            theater.name.toLowerCase().includes(search.toLowerCase()),
+          )
+        : [];
+      setFilteredTheaters(newFilteredTheaters);
+    } else {
+      const newFilteredTheaters = theaters ? theaters : [];
+      setFilteredTheaters(newFilteredTheaters);
+    }
+  };
+
   return (
     <PageLayout>
       <Avatar bg="teal.500" />
@@ -37,7 +58,11 @@ export const HomePage = () => {
                   pointerEvents="none"
                   //   children={<CFaUserAlt color="gray.300" />}
                 />
-                <Input type="text" placeholder="Le chat poté" />
+                <Input
+                  type="text"
+                  placeholder="Le chat poté"
+                  onChange={handleSearch}
+                />
               </InputGroup>
             </FormControl>
             <Button
@@ -59,8 +84,8 @@ export const HomePage = () => {
           backgroundColor="whiteAlpha.900"
           boxShadow="md"
         >
-          {theaters ? (
-            theaters.map((theater) => (
+          {filteredTheaters ? (
+            filteredTheaters.map((theater) => (
               <Link key={theater.id} href={`/cinema/${theater.id}`}>
                 {theater.name}, {theater.address}
               </Link>
