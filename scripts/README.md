@@ -22,7 +22,6 @@ You can start writing assets in `scrapping/assets.py`. The assets are automatica
 
 ## Development
 
-
 ### Adding new Python dependencies
 
 You can specify new Python dependencies in `setup.py`.

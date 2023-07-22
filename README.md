@@ -6,8 +6,8 @@ Main repo of the opensource webapp
 
 ```
 cp .env.example .env
-docker compose build
-docker compose up -d
+    docker compose build
+    docker compose up -d
 ```
 
 Enter api container with `docker exec -it cinemaccs_api bash`

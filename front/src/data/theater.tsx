@@ -1,20 +1,21 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Theater } from "../pages/types";
-import { APIQueryKey } from "./utils";
+import { APIQueryKey, sampleSessions } from "./utils";
+import { sampleImage } from "../sample_image";
 
 const theaters = [
   {
-    id: "1",
+    id: 1,
     name: "MK2 Bibliothèque",
     address: "2 rue de la bibliothèque, 75014 Paris",
   },
   {
-    id: "2",
+    id: 2,
     name: "MK2 Bastille",
     address: "2 rue de la Bastille, 75014 Paris",
   },
   {
-    id: "3",
+    id: 3,
     name: "MK2 Beaubourg",
     address: "2 rue de Beaubourg, 75014 Paris",
   },
@@ -65,3 +66,35 @@ export const useGetTheaters = (): UseQueryResult<Theater[]> => {
 //     return resp;
 //   };
 // };
+
+const movie_room = {
+  movie: {
+    id: 1,
+    title: "Le chat poté",
+    poster: sampleImage,
+    duration: "3H12",
+    allocine_link: "https://codephenix.fr",
+  },
+  room: {
+    id: 1,
+    name: "Salle 1",
+  },
+  sessions: sampleSessions,
+};
+
+const theater = {
+  id: 1,
+  name: "MK2 Bibliothèque",
+  address: "2 rue de la bibliothèque, 75014 Paris",
+  accessibility_description:
+    "La salle est plutôt accessible mais les escaliers sont un peu raides. Si vous faites de l'escalade ca devrait aller mais sinon partez plutôt sur l'option home cinema",
+  photos: [sampleImage, sampleImage, sampleImage],
+  movies_rooms: [movie_room, movie_room, movie_room],
+} as Theater;
+
+const getTheaterKey = (): APIQueryKey => ["get_theater_details"];
+// const fetchTheaters = async (): Promise<Theater[]> => theaters;
+const fetchTheater = (): Theater => theater;
+export const useGetTheater = (): UseQueryResult<Theater> => {
+  return useQuery({ queryKey: getTheaterKey(), queryFn: fetchTheater });
+};

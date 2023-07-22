@@ -1,12 +1,16 @@
+import json
+
+import httpx
+import pandas as pd
 from dagster import (
+    DailyPartitionsDefinition,
+    Definitions,
+    Failure,
+    MetadataValue,
+    Output,
+    SkipReason,
     asset,
     get_dagster_logger,
-    Definitions,
-    DailyPartitionsDefinition,
-    Output,
-    MetadataValue,
-    SkipReason,
-    Failure,
 )
 import json
 import pandas as pd
@@ -23,6 +27,8 @@ import httpx
 import datetime
 import concurrent.futures
 
+from .mappings import MAP_MOVIE, MAP_SESSION, MAP_THEATER, remap_keys
+from .modules import call_website, find_data_key, get_movies_session, list_all_movies
 
 logger = get_dagster_logger()
 mk2_home = "https://www.mk2.com"
@@ -37,6 +43,7 @@ def getMK2DataKey():
     mk2_home_content = call_website(mk2_home)
     data_key = find_data_key(mk2_home_content)
     return data_key
+
 
 
 @asset(group_name="theaters", description="Scrape mk2 theaters")
@@ -138,6 +145,7 @@ def scrapeMK2Movies(getMK2DataKey):
     )
 
 
+
 @asset(group_name="movies", description="Upload Movies with the API")
 def uploadMK2Movies(scrapeMK2Movies):
     for i in range(len(scrapeMK2Movies)):
@@ -154,31 +162,14 @@ def getMK2Sessions(scrapeMK2Movies):
     Pour l'instant je me base sur le retour de scrapeMK2Movies mais on ajoutera ici un appel à l'API ou un asset à part suivant le fonctionnement, besoin d'avoir l'id du film retourné par l'API pour pouvoir renvoyer l'info à o'API
     Tester: https://prod-paris.api.mk2.com/films/les-algues-vertes?cinema-group=ile-de-france&show-time_gt=2023-07-16
     """
-    next_session_date = next_dates()
-    all_movies_sessions = []
-
-    num_threads = 100
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
-        futures = [
-            executor.submit(
-                get_sessions_movies, movie_url, movie["slug"], next_session_date
-            )
-            for movie in scrapeMK2Movies
-        ]
-
-        for future in concurrent.futures.as_completed(futures):
-            result = future.result()
-            all_movies_sessions.append(result)
-
-    logger.info(all_movies_sessions)
-    df = pd.DataFrame(all_movies_sessions)
-    logger.info(df)
-
-    return Output(
-        value=all_movies_sessions,
-        metadata={
-            "num_rows": len(df),
-            "preview": MetadataValue.md(df.head().to_markdown()),
-        },
-    )
+    for i in range(len(scrapeMK2Movies)):
+        logger.info(f"----- {scrapeMK2Movies[i]['slug']} -----")
+        movie_sessions = json.loads(get_movies_session(movie_url, scrapeMK2Movies[i]["slug"]))
+        movie_sessions_cinema = movie_sessions.get("sessionsByCinema")
+        for j in range(len(movie_sessions_cinema)):
+            #logger.info(movie_sessions_cinema[j])
+            df = pd.DataFrame(movie_sessions_cinema[j].get("sessions"))
+            # Il y a l'id du cinéma dans le sessions (cinemaId)
+            # Il y a plusieurs attributs, regarder le "shortname" de ces attributs qui correspond aux infos comme 2D, VF
+            # Showtime est la date de la séance du film en ISO-8601; correspond à l'heure de la séance à UTC, le Z indiquant que c'est UTC
+            logger.info(df)

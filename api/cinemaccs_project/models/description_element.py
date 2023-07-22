@@ -2,9 +2,9 @@ from django.db import models
 
 
 class DescriptionElement(models.Model):
-    PMR = 'PMR'
+    PMR = "PMR"
     HANDICAP_FAMILLY_CHOICES = [
-        (PMR, 'Mobility'),
+        (PMR, "Mobility"),
     ]
     handicap_familly = models.CharField(
         max_length=5,

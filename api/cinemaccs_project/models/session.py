@@ -2,10 +2,7 @@ from django.db import models
 
 
 class Session(models.Model):
-    LANGUAGE_CHOICES = [
-        ('VO', 'VO'),
-        ('VF', 'VF')
-    ]
+    LANGUAGE_CHOICES = [("VO", "VO"), ("VF", "VF")]
     room_id = models.IntegerField(null=True)
     movie_id = models.IntegerField(null=True)
     internal_session_id = models.CharField(max_length=20, null=True)
@@ -15,7 +12,7 @@ class Session(models.Model):
     language = models.CharField(
         max_length=5,
         choices=LANGUAGE_CHOICES,
-        default='VF',
+        default="VF",
     )
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)

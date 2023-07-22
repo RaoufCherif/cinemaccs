@@ -5,8 +5,8 @@ from dagster import (
     AssetSelection,
     ScheduleDefinition,
 )
-from . import assets
 
+from . import assets
 
 all_assets = load_assets_from_modules([assets])
 
