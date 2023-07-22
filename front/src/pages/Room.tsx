@@ -1,9 +1,12 @@
-import { Flex, Box, Stack, Image, Link } from "@chakra-ui/react";
+import { Flex, Box, Stack, Spinner, Image, Link } from "@chakra-ui/react";
 
 import { useGetRoom } from "../data/room";
 
 export const RoomPage = () => {
-  const { data: room } = useGetRoom();
+  const { isLoading, data: room } = useGetRoom();
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Flex
       flexDirection="column"

@@ -1,5 +1,5 @@
 import { useGetMovie } from "../data/movie";
-import { Flex, Box, Stack, Image, Link } from "@chakra-ui/react";
+import { Flex, Box, Stack, Image, Link, Spinner } from "@chakra-ui/react";
 
 import { MovieWithTheaters, Room, Session, Theater } from "./types";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const MovieCard: React.FC<{ movie: MovieWithTheaters }> = ({ movie }) => {
   );
 };
 export const MoviePage = () => {
-  const { data: movie } = useGetMovie();
+  const { isLoading, data: movie } = useGetMovie();
   const [sessions, setSessions] = useState<SessionEnriched[]>([]);
   useEffect(() => {
     const result = [] as SessionEnriched[];
@@ -55,6 +55,9 @@ export const MoviePage = () => {
       setSessions(result);
     }
   }, [movie]);
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Flex
       flexDirection="column"

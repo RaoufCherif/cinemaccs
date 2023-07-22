@@ -10,6 +10,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Spinner,
 } from "@chakra-ui/react";
 import { Theater, MovieRoom, Day } from "./types";
 import { useGetTheater } from "../data/theater";
@@ -76,7 +77,10 @@ export const TheaterPage = () => {
   //   const days = theater.movies_rooms.map((mr) => mr.sessions.map((s) => s.day));
   //   const uniqueDays = days.filter((day) => onlyUnique(day, 0, days));
   const uniqueDays = ["Vendredi", "Samedi", "Dimanche"];
-  const { data: theater } = useGetTheater();
+  const { data: theater, isLoading } = useGetTheater();
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Flex
       flexDirection="column"
