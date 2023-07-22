@@ -14,9 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { useGetTheaters } from "../data/theater";
 import { PageLayout } from "../components/PageLayout";
+import { useGetSearchMovies } from "../data/movie";
 
 export const HomePage = () => {
   const { data: theaters } = useGetTheaters();
+  const { data: movies } = useGetSearchMovies();
   return (
     <PageLayout>
       <Avatar bg="teal.500" />
@@ -64,7 +66,23 @@ export const HomePage = () => {
               </Link>
             ))
           ) : (
-            <div>Aucun résultat</div>
+            <div>Aucun résultat salle</div>
+          )}
+        </Stack>
+        <Stack
+          spacing={4}
+          p="1rem"
+          backgroundColor="whiteAlpha.900"
+          boxShadow="md"
+        >
+          {movies ? (
+            movies.map((movie) => (
+              <Link key={movie.id} href={`/film/${movie.id}`}>
+                {movie.title}
+              </Link>
+            ))
+          ) : (
+            <div>Aucun résultat cinéma</div>
           )}
         </Stack>
       </Box>
