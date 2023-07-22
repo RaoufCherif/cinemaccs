@@ -6,8 +6,7 @@ export const PageLayout: React.FC<React.PropsWithChildren<{}>> = ({
   return (
     <Flex
       flexDirection="column"
-      width="100wh"
-      height="100vh"
+      width="100vw"
       backgroundColor="gray.200"
       justifyContent="center"
       alignItems="center"
