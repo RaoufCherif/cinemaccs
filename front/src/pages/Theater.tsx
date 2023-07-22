@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Theater, MovieRoom, Day } from "./types";
 import { useGetTheater } from "../data/theater";
+import { PageLayout } from "../components/PageLayout";
 
 const TheaterCard: React.FC<{ theater: Theater }> = ({ theater }) => {
   return (
@@ -82,51 +83,37 @@ export const TheaterPage = () => {
     return <Spinner />;
   }
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {theater ? (
-          <>
-            <TheaterCard theater={theater} />
-            <Box>
-              <Tabs>
-                <TabList>
-                  {uniqueDays.map((day, idx) => (
-                    <Tab key={`tab-${idx}`}>{day}</Tab>
-                  ))}
-                </TabList>
+    <PageLayout>
+      {theater ? (
+        <>
+          <TheaterCard theater={theater} />
+          <Box>
+            <Tabs>
+              <TabList>
+                {uniqueDays.map((day, idx) => (
+                  <Tab key={`tab-${idx}`}>{day}</Tab>
+                ))}
+              </TabList>
 
-                <TabPanels>
-                  {uniqueDays.map((day, idx) => (
-                    <TabPanel key={`tabpanel-${idx}`}>
-                      {theater.movies_rooms.map((mr, idx) => (
-                        <MovieCard
-                          key={`movie-${idx}`}
-                          movieRoom={mr}
-                          day={day as Day}
-                        />
-                      ))}
-                    </TabPanel>
-                  ))}
-                </TabPanels>
-              </Tabs>
-            </Box>{" "}
-          </>
-        ) : (
-          <Box>Cinéma introuvable</Box>
-        )}
-      </Stack>
-    </Flex>
+              <TabPanels>
+                {uniqueDays.map((day, idx) => (
+                  <TabPanel key={`tabpanel-${idx}`}>
+                    {theater.movies_rooms.map((mr, idx) => (
+                      <MovieCard
+                        key={`movie-${idx}`}
+                        movieRoom={mr}
+                        day={day as Day}
+                      />
+                    ))}
+                  </TabPanel>
+                ))}
+              </TabPanels>
+            </Tabs>
+          </Box>{" "}
+        </>
+      ) : (
+        <Box>Cinéma introuvable</Box>
+      )}
+    </PageLayout>
   );
 };

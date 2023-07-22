@@ -4,6 +4,7 @@ import { Flex, Box, Stack, Image, Link, Spinner } from "@chakra-ui/react";
 import { MovieWithTheaters, Room, Session, Theater } from "./types";
 import { useEffect, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { PageLayout } from "../components/PageLayout";
 
 type SessionEnriched = Session & {
   theater_id: number;
@@ -59,46 +60,32 @@ export const MoviePage = () => {
     return <Spinner />;
   }
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {movie ? (
-          <>
-            <MovieCard movie={movie} />
-            <Box minW={{ base: "90%", md: "468px" }}>
-              <Stack
-                spacing={4}
-                p="1rem"
-                backgroundColor="whiteAlpha.900"
-                boxShadow="md"
-              >
-                {sessions ? (
-                  sessions.map((session, idx) => (
-                    <Link href={`/rooms/${session.room_id}`} key={idx}>
-                      {session.theater_name} - {session.room_name}
-                    </Link>
-                  ))
-                ) : (
-                  <div>Aucun résultat</div>
-                )}
-              </Stack>
-            </Box>
-          </>
-        ) : (
-          <Box>Film introuvable</Box>
-        )}
-      </Stack>
-    </Flex>
+    <PageLayout>
+      {movie ? (
+        <>
+          <MovieCard movie={movie} />
+          <Box minW={{ base: "90%", md: "468px" }}>
+            <Stack
+              spacing={4}
+              p="1rem"
+              backgroundColor="whiteAlpha.900"
+              boxShadow="md"
+            >
+              {sessions ? (
+                sessions.map((session, idx) => (
+                  <Link href={`/rooms/${session.room_id}`} key={idx}>
+                    {session.theater_name} - {session.room_name}
+                  </Link>
+                ))
+              ) : (
+                <div>Aucun résultat</div>
+              )}
+            </Stack>
+          </Box>
+        </>
+      ) : (
+        <Box>Film introuvable</Box>
+      )}
+    </PageLayout>
   );
 };
