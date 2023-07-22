@@ -48,7 +48,7 @@ export const TheaterCard: React.FC<{ theater: TheaterBase }> = ({
   );
 };
 
-export const MovieCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
+export const MovieRoomCard: React.FC<{ movieRoom: MovieRoom; day: Day }> = ({
   movieRoom,
   day,
 }) => {

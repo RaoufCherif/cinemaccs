@@ -84,11 +84,8 @@ export const MoviePage = () => {
       setSessions(result);
     }
   }, [movie]);
-  if (isLoading) {
-    return <Spinner />;
-  }
   return (
-    <PageLayout>
+    <PageLayout isLoading={isLoading}>
       {movie ? (
         <>
           <MovieCard movie={movie} />

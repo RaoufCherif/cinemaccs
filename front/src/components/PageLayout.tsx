@@ -1,8 +1,8 @@
-import { Flex, Stack } from "@chakra-ui/react";
+import { Flex, Spinner, Stack } from "@chakra-ui/react";
 
-export const PageLayout: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
+export const PageLayout: React.FC<
+  React.PropsWithChildren<{ isLoading?: boolean }>
+> = ({ isLoading, children }) => {
   return (
     <Flex
       flexDirection="column"
@@ -17,7 +17,7 @@ export const PageLayout: React.FC<React.PropsWithChildren<{}>> = ({
         justifyContent="center"
         alignItems="center"
       >
-        {children}
+        {isLoading ? <Spinner /> : children}
       </Stack>
     </Flex>
   );

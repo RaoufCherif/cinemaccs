@@ -6,11 +6,8 @@ import { TheaterCard } from "../components/Cards";
 
 export const RoomPage = () => {
   const { isLoading, data: room } = useGetRoom();
-  if (isLoading) {
-    return <Spinner />;
-  }
   return (
-    <PageLayout>
+    <PageLayout isLoading={isLoading}>
       {room ? (
         <>
           <TheaterCard theater={room.theater} />

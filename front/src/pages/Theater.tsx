@@ -10,7 +10,7 @@ import {
 import { Day } from "./types";
 import { useGetTheater } from "../data/theater";
 import { PageLayout } from "../components/PageLayout";
-import { TheaterCard, MovieCard } from "../components/Cards";
+import { TheaterCard, MovieRoomCard } from "../components/Cards";
 
 export const TheaterPage = () => {
   //   TODO Make it work
@@ -18,11 +18,8 @@ export const TheaterPage = () => {
   //   const uniqueDays = days.filter((day) => onlyUnique(day, 0, days));
   const uniqueDays = ["Vendredi", "Samedi", "Dimanche"];
   const { data: theater, isLoading } = useGetTheater();
-  if (isLoading) {
-    return <Spinner />;
-  }
   return (
-    <PageLayout>
+    <PageLayout isLoading={isLoading}>
       {theater ? (
         <>
           <TheaterCard theater={theater} />
@@ -38,7 +35,7 @@ export const TheaterPage = () => {
                 {uniqueDays.map((day, idx) => (
                   <TabPanel key={`tabpanel-${idx}`}>
                     {theater.movies_rooms.map((mr, idx) => (
-                      <MovieCard
+                      <MovieRoomCard
                         key={`movie-${idx}`}
                         movieRoom={mr}
                         day={day as Day}
