@@ -163,31 +163,6 @@ def get_shortname_if_starts_with_v(row):
     return None
 
 
-def get_sessions_movies(movie_url, movie_slug, next_session_date):
-    all_sessions = []
-    for h in range(len(next_session_date)):
-        movie_sessions = json.loads(
-            get_movies_session(movie_url, movie_slug, next_session_date[h])
-        )
-        movie_sessions_cinema = movie_sessions.get("sessionsByCinema")
-        for k in range(len(movie_sessions_cinema)):
-            sessions = movie_sessions_cinema[k].get("sessions")
-            for l in range(len(sessions)):
-                all_sessions.append(sessions[l])
-    df = pd.DataFrame(all_sessions)
-    if len(df) > 0:
-        try:
-            df["language"] = df["attributes"].apply(get_shortname_if_starts_with_v)
-        except Exception as Ex:
-            logger.info(f"ERROR - {movie_slug} - {Ex}")
-            logger.info(df)
-        df["showTime"] = pd.to_datetime(df["showTime"])
-        df.drop_duplicates
-        df["slug"] = movie_slug
-        # Il y a l'id du cinéma dans le sessions (cinemaId)
-        logger.info(f"INFO - {movie_slug} - {len(df)} sessions")
-        return df.values.tolist()
-
 def get_sessions_theaters(theaters_url, theater_slug, next_session_date):
     all_sessions = []
     for h in range(len(next_session_date)):
@@ -212,3 +187,7 @@ def get_sessions_theaters(theaters_url, theater_slug, next_session_date):
         # Il y a l'id du cinéma dans le sessions (cinemaId)
         logger.info(f"INFO - {theater_slug} - {len(df)} sessions")
         return df.to_json(orient = 'records')
+    
+
+def extract_movie_id(scheduled_film_id):
+    return scheduled_film_id.split("-")[1]

@@ -18,15 +18,13 @@ from .modules import (
     find_data_key,
     list_all_movies,
     next_dates,
-    get_sessions_movies,
     get_sessions_theaters,
+    extract_movie_id,
 )
 from .mappings import MAP_THEATER, remap_keys, MAP_MOVIE, MAP_SESSION
 import datetime
 import concurrent.futures
 
-from .mappings import MAP_MOVIE, MAP_SESSION, MAP_THEATER, remap_keys
-from .modules import call_website, find_data_key, get_movies_session, list_all_movies
 
 logger = get_dagster_logger()
 mk2_home = "https://www.mk2.com"
@@ -68,20 +66,20 @@ def jsonMK2Theaters(scrapeMK2Theaters):
     with open("data.json", "w") as json_file:
         json_file.write(df.to_json(orient = 'records'))  
     """
-    return df.to_json(orient = 'records')
+    return df.to_json(orient="records")
 
 
 @asset(group_name="theaters", description="Upload Theaters with the API")
 def uploadMK2Theaters(jsonMK2Theaters):
-    r = requests.request("POST",f"{api_url}/theater/", data=jsonMK2Theaters)
+    r = requests.request("POST", f"{api_url}/theater/", data=jsonMK2Theaters)
     logger.info(r.text)
 
 
-@asset(group_name="movies", description="Get sessions from theaters")
+@asset(group_name="sessions", description="Get sessions from theaters")
 def getMK2TheatersSessions(scrapeMK2Theaters):
     next_session_date = next_dates()
     all_movies_sessions = []
-    
+
     df = scrapeMK2Theaters["complexSlug"]
     df = df.drop_duplicates()
     theaters_list = df.values.tolist()
@@ -106,14 +104,31 @@ def getMK2TheatersSessions(scrapeMK2Theaters):
                 all_movies_sessions.append(sub)
 
     df = pd.DataFrame(all_movies_sessions)
-
+    df["movieId"] = df["scheduledFilmId"].apply(extract_movie_id)
+    df["session_time"] = pd.to_datetime(df["showTime"], unit="ms")
     return Output(
-        value=all_movies_sessions,
+        value=df,
         metadata={
             "num_rows": len(df),
             "preview": MetadataValue.md(df.head().to_markdown()),
         },
     )
+
+
+@asset(group_name="sessions", description="Post sessions from theaters")
+def jsonMK2Sessions(getMK2TheatersSessions):
+    logger.info(getMK2TheatersSessions.to_json(orient="records"))
+    getMK2TheatersSessions["company_name"] = "MK2"
+    getMK2TheatersSessions.rename(columns=MAP_SESSION, inplace=True)
+    df = getMK2TheatersSessions[MAP_SESSION.values()]  # To keep only renamed columns
+    logger.info(df)
+    return df.to_json(orient="records")
+
+
+@asset(group_name="sessions", description="Upload Sessions with the API")
+def uploadMK2Sessions(jsonMK2Sessions):
+    r = requests.request("POST", f"{api_url}/sessions/", data=jsonMK2Sessions)
+    logger.info(r.text)
 
 
 @asset(group_name="movies", description="Scrape mk2 movies")
@@ -147,10 +162,10 @@ def jsonMK2Movies(scrapeMK2Movies):
     scrapeMK2Movies["company_name"] = "MK2"
     scrapeMK2Movies.rename(columns=MAP_MOVIE, inplace=True)
     df = scrapeMK2Movies[MAP_MOVIE.values()]  # To keep only renamed columns
-    return df.to_json(orient = 'records')
+    return df.to_json(orient="records")
 
 
 @asset(group_name="movies", description="Upload Movies with the API")
 def uploadMK2Movies(jsonMK2Movies):
-    r = requests.request("POST",f"{api_url}/movie/", data=jsonMK2Movies)
+    r = requests.request("POST", f"{api_url}/movie/", data=jsonMK2Movies)
     logger.info(r.text)
