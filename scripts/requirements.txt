@@ -1,5 +1,4 @@
 dagster
 dagit
 bs4
-httpx
 pandas

@@ -14,8 +14,6 @@ import sys
 import datetime
 import random
 import sys
-
-import httpx
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
