@@ -17,7 +17,9 @@ from cinemaccs_project import settings
 from cinemaccs_project.views import (
     BrandViewSet,
     TheaterViewSet,
+    TheaterPictureViewSet,
     RoomViewSet,
+    RoomPictureViewSet,
     DescriptionElementViewSet
 )
 from django.conf.urls.static import static
@@ -27,13 +29,16 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 
-router.register(r"theaters", TheaterViewSet, basename="theater")
 router.register(r"brands", BrandViewSet, basename="brand")
-router.register(r"rooms", RoomViewSet, basename="room")
 router.register(
     r"delems", DescriptionElementViewSet, basename="descriptionelement"
 )
-
+router.register(r"theaters", TheaterViewSet, basename="theater")
+router.register(
+    r"theaterspic", TheaterPictureViewSet, basename="theaterpicture"
+)
+router.register(r"rooms", RoomViewSet, basename="room")
+router.register(r"roomspic", RoomPictureViewSet, basename="roompicture")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

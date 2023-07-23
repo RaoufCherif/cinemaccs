@@ -21,7 +21,7 @@ class TheaterSerializerBase(serializers.HyperlinkedModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Theater.objects.all(),
-                fields=["company_name", "internal_id"]
+                fields=["brand", "internal_id"]
             )
         ]
 

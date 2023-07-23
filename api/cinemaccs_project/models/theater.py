@@ -12,7 +12,6 @@ class Theater(models.Model):
     )
 
     internal_id = models.CharField(max_length=10, null=True)
-    company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
     complex_slug = models.CharField(max_length=100, null=True)
     cinema_national_id = models.IntegerField(null=True)
@@ -23,14 +22,12 @@ class Theater(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     parking_info = models.CharField(max_length=300, null=True)
-    is_gift_store = models.CharField(max_length=100, null=True)
+    is_gift_store = models.BooleanField(null=True)
     public_transport = models.CharField(max_length=300, null=True)
     currency_code = models.CharField(max_length=100, null=True)
-    allow_print_at_home_bookings = models.CharField(max_length=10, null=True)
-    allow_on_line_voucher_validation = models.CharField(
-        max_length=10, null=True
-    )
-    display_sofa_seats = models.CharField(max_length=10, null=True)
+    allow_print_at_home_bookings = models.BooleanField(null=True)
+    allow_on_line_voucher_validation = models.BooleanField(null=True)
+    display_sofa_seats = models.BooleanField(null=True)
     time_zone_id = models.CharField(max_length=100, null=True)
 
     accessibility_description = models.CharField(max_length=1000, null=True)
