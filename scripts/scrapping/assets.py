@@ -62,13 +62,22 @@ def jsonMK2Theaters(scrapeMK2Theaters, getBrands):
     with open("data.json", "w") as json_file:
         json_file.write(df.to_json(orient = 'records'))  
     """
-    return df.to_json(orient="records")
+    return Output(
+        value=df.to_json(orient="records"),
+        metadata={
+            "num_rows": len(df),
+            "preview": MetadataValue.md(df.head().to_markdown()),
+        },
+    )
 
 
 @asset(group_name="theaters", description="Upload Theaters with the API")
 def uploadMK2Theaters(jsonMK2Theaters):
-    r = requests.request("POST", f"{api_url}/theater/", data=jsonMK2Theaters)
+    payload = json.loads(jsonMK2Theaters)
+    r = requests.request("POST", f"{api_url}/theaters/",  json=payload)
     logger.info(r.text)
+    if r.status_code > 201:
+        raise Failure (f'ERROR - {r.status_code}')
 
 
 @asset(group_name="brands", description="Get all theaters")
