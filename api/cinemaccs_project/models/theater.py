@@ -1,5 +1,6 @@
-from cinemaccs_project.models import Brand, DescriptionElement
 from django.db import models
+
+from cinemaccs_project.models import Brand, DescriptionElement
 
 
 class Theater(models.Model):
@@ -11,7 +12,6 @@ class Theater(models.Model):
     )
 
     internal_id = models.CharField(max_length=10, null=True)
-
     company_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=300, null=True)
     complex_slug = models.CharField(max_length=100, null=True)
@@ -27,7 +27,9 @@ class Theater(models.Model):
     public_transport = models.CharField(max_length=300, null=True)
     currency_code = models.CharField(max_length=100, null=True)
     allow_print_at_home_bookings = models.CharField(max_length=10, null=True)
-    allow_on_line_voucher_validation = models.CharField(max_length=10, null=True)
+    allow_on_line_voucher_validation = models.CharField(
+        max_length=10, null=True
+    )
     display_sofa_seats = models.CharField(max_length=10, null=True)
     time_zone_id = models.CharField(max_length=100, null=True)
 
@@ -35,9 +37,10 @@ class Theater(models.Model):
     entry_description = models.CharField(max_length=1000, null=True)
     sanitary_description = models.CharField(max_length=1000, null=True)
     popcorn_description = models.CharField(max_length=1000, null=True)
-
     description = models.CharField(max_length=1000, null=True)
-    description_elements = models.ManyToManyField(DescriptionElement)
+    description_elements = models.ManyToManyField(
+        DescriptionElement, blank=True
+    )
 
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)
@@ -50,7 +53,10 @@ class Theater(models.Model):
 
     @property
     def full_name(self):
-        return " - ".join([self.company_name, self.name])
+        return " - ".join([
+            self.company_name if self.company_name is not None else "",
+            self.name if self.name is not None else "",
+        ])
 
     @property
     def address(self):
@@ -59,11 +65,12 @@ class Theater(models.Model):
     @property
     def description_elements_kwargs(self):
         # Suppose a prefetch
-        return {e.id: e.text for e in self.description_elements}
+        return {e.id: e.text for e in self.description_elements.all()}
 
     @property
     def accessibility_description(self):
         return (
-            self.description + '\n'
+            self.description if self.description is not None else ''
+            + '\n'
             + ' '.join([v for _, v in self.description_elements_kwargs])
         )

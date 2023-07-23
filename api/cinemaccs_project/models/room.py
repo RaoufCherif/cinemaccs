@@ -1,4 +1,5 @@
 from django.db import models
+
 from cinemaccs_project.models import Theater, DescriptionElement
 
 
@@ -24,7 +25,9 @@ class Room(models.Model):
     wheelchair_spaces = models.IntegerField(null=True)
 
     description = models.CharField(max_length=1000, null=True)
-    description_elements = models.ManyToManyField(DescriptionElement)
+    description_elements = models.ManyToManyField(
+        DescriptionElement, blank=True
+    )
 
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     modified_date = models.DateTimeField(auto_now=True, null=True)
