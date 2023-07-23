@@ -141,7 +141,6 @@ def get_movies_session(url, movie_name, dateSessions):
                     )
 
 
-
 def next_dates():
     weekday_idx = 2
     now = datetime.datetime.now()
@@ -191,3 +190,8 @@ def get_sessions_theaters(theaters_url, theater_slug, next_session_date):
 
 def extract_movie_id(scheduled_film_id):
     return scheduled_film_id.split("-")[1]
+
+def get_brand_url(json_brands, brand_name):
+    for item in json_brands:
+        if item["company_name"] == brand_name:
+            return item["url"]
