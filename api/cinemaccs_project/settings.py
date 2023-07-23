@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cinemaccsapi', '.localhost', '127.0.0.1']
 
 MEDIA_ROOT = BASE_DIR.parent / "media"
 MEDIA_URL = "/media/"
