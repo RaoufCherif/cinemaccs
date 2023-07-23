@@ -12,6 +12,6 @@ const room = {
 const getRoomKey = (): APIQueryKey => ["get_room_details"];
 // const fetchTheaters = async (): Promise<Theater[]> => theaters;
 const fetchRoom = (): RoomWithTheaters => room;
-export const useGetRoom = (): UseQueryResult<Room> => {
+export const useGetRoom = (): UseQueryResult<RoomWithTheaters> => {
   return useQuery({ queryKey: getRoomKey(), queryFn: fetchRoom });
 };

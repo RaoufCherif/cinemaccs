@@ -52,8 +52,10 @@ MAP_MOVIE = {
 }
 
 MAP_SESSION = {
-    "room_id": "room_id",
-    "movie_id": "movie_id",
+    "movieId": "movie_id",
     "id": "internal_session_id",
-    "description": "description",
+    "cinemaId": "theater_internal_id",
+    "seatsAvailable": "seats_available",
+    "language": "language",
+    "session_time": "session_time"
 }

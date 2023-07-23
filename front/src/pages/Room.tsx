@@ -1,33 +1,43 @@
-import { Flex, Box, Stack, Image, Link } from "@chakra-ui/react";
+import { Flex, Box, Text, Stack, Spinner, Image } from "@chakra-ui/react";
 
 import { useGetRoom } from "../data/room";
+import { PageLayout } from "../components/PageLayout";
+import { TheaterCard } from "../components/Cards";
 
 export const RoomPage = () => {
-  const { data: room } = useGetRoom();
+  const { isLoading, data: room } = useGetRoom();
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {room ? (
-          <>
-            {/* TODO utiliser TheaterCard ici */}
-            <div>toto</div>
-          </>
-        ) : (
-          <Box>Salle introuvable</Box>
-        )}
-      </Stack>
-    </Flex>
+    <PageLayout isLoading={isLoading}>
+      {room ? (
+        <>
+          <TheaterCard theater={room.theater} />
+          <Flex flexDirection={"column"}>
+            <Text>
+              Description générale du cinéma:{" "}
+              {room.theater.accessibility_description}
+            </Text>
+            <Text>Entrée du cinéma: {room.theater.entry_description}</Text>
+            <Text>
+              Toilettes du cinéma: {room.theater.sanitory_description}
+            </Text>
+            <Text>Boutique du cinéma: {room.theater.popcorn_description}</Text>
+            <Text>
+              Description de la salle: {room.accessibility_description}
+            </Text>
+            <Text>Entrée de la salle: {room.access_point}</Text>
+          </Flex>
+          {room.photos && (
+            <Stack>
+              Photos du cinéma:{" "}
+              {room.photos.map((photo) => (
+                <Image src={`data:image/jpeg;base64, ${photo}`} />
+              ))}
+            </Stack>
+          )}
+        </>
+      ) : (
+        <Box>Salle introuvable</Box>
+      )}
+    </PageLayout>
   );
 };
