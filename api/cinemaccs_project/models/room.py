@@ -38,13 +38,14 @@ class Room(models.Model):
     @property
     def description_elements_kwargs(self):
         # Suppose a prefetch
-        return {
-            e.id: e.text for e in self.description_elements
-        }
+        return {e.id: e.text for e in self.description_elements.all()}
 
     @property
     def accessibility_description(self):
         return (
-            self.description + '\n'
-            + ' '.join([v for _, v in self.description_elements_kwargs])
+            self.description if self.description else ''
+            + '\n'
+            + ' '.join(
+                [v for _, v in self.description_elements_kwargs.items()]
+            )
         )

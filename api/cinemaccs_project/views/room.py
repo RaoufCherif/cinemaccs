@@ -2,11 +2,21 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from cinemaccs_project.models import Room
-from cinemaccs_project.serializers import RoomSerializer
-from cinemaccs_project.views import DefaultCustomMixin
+from cinemaccs_project.serializers import (
+    RoomSerializerBase,
+    RoomSerializerGet
+)
+from cinemaccs_project.views import (
+    DefaultCustomMixin,
+    BatchCreateMixin
+)
 
 
-class RoomViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
+class RoomViewSet(
+    BatchCreateMixin,
+    DefaultCustomMixin,
+    viewsets.ModelViewSet
+):
     """
     The Room viewset that give a lightweight
     json when list is asked.
@@ -16,4 +26,7 @@ class RoomViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
 
     queryset = Room.objects.all()
 
-    default_serializer = RoomSerializer
+    default_serializer = RoomSerializerBase
+    custom_serializer = {
+        "retrieve": RoomSerializerGet,
+    }

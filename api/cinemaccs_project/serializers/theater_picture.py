@@ -8,7 +8,7 @@ class TheaterPictureSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = TheaterPicture
-        fields = ("id", "theater_id", "legend", "photo_ext_url")
+        fields = "__all__"
 
     def get_photo_ext_url(self, theater_picture):
         request = self.context.get("request")

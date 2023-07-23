@@ -8,7 +8,7 @@ class RoomPictureSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = RoomPicture
-        fields = ('id', 'room_id', 'legend', 'photo_ext_url')
+        fields = "__all__"
 
     def get_photo_ext_url(self, room_picture):
         request = self.context.get('request')

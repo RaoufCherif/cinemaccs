@@ -70,7 +70,9 @@ class Theater(models.Model):
     @property
     def accessibility_description(self):
         return (
-            self.description if self.description is not None else ''
+            self.description if self.description else ''
             + '\n'
-            + ' '.join([v for _, v in self.description_elements_kwargs])
+            + ' '.join(
+                [v for _, v in self.description_elements_kwargs.items()]
+            )
         )
