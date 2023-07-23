@@ -1,5 +1,6 @@
-from cinemaccs_project.models import TheaterPicture
 from rest_framework import serializers
+
+from cinemaccs_project.models import TheaterPicture
 
 
 class TheaterPictureSerializer(serializers.HyperlinkedModelSerializer):

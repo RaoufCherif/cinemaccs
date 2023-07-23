@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from cinemaccs_project import settings
-from cinemaccs_project.views import BrandViewSet, TheaterViewSet
+from cinemaccs_project.views import BrandViewSet, TheaterViewSet, RoomViewSet
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
@@ -22,9 +22,9 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 
-router.register(r"theater", TheaterViewSet, basename="theater")
-router.register(r"brand", BrandViewSet, basename="brand")
-
+router.register(r"theaters", TheaterViewSet, basename="theater")
+router.register(r"brands", BrandViewSet, basename="brand")
+router.register(r"rooms", RoomViewSet, basename="room")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

@@ -1,5 +1,6 @@
-from cinemaccs_project.models import DescriptionElement
 from rest_framework import serializers
+
+from cinemaccs_project.models import DescriptionElement
 
 
 class DescriptionElementSerializer(serializers.HyperlinkedModelSerializer):

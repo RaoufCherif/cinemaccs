@@ -1,6 +1,7 @@
+from rest_framework import permissions, viewsets
+
 from cinemaccs_project.models import Brand
 from cinemaccs_project.serializers import BrandSerializer
-from rest_framework import permissions, viewsets
 
 
 class BrandViewSet(viewsets.ModelViewSet):

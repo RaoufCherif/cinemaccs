@@ -2,9 +2,8 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from cinemaccs_project.models import Room
-from cinemaccs_project.serializers import (
-    RoomSerializer, DefaultCustomMixin
-)
+from cinemaccs_project.serializers import RoomSerializer
+from cinemaccs_project.views import DefaultCustomMixin
 
 
 class RoomViewSet(DefaultCustomMixin, viewsets.ModelViewSet):
