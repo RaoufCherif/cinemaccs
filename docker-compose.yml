@@ -1,10 +1,10 @@
 version: "3"
 
 services:
-  cinemaccs_db:
+  cinemaccsdb:
     restart: always
     image: mariadb
-    container_name: cinemaccs_db
+    container_name: cinemaccsdb
     volumes:
       - cinemaccs_mariadb_data:/var/lib/mysql
     ports:
@@ -12,9 +12,9 @@ services:
     env_file:
       - .env
 
-  cinemaccs_api:
+  cinemaccsapi:
     restart: always
-    container_name: cinemaccs_api
+    container_name: cinemaccsapi
     build: ./api
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -23,13 +23,13 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - cinemaccs_db
+      - cinemaccsdb
     env_file:
       - .env
 
-  cinemaccs_front:
+  cinemaccsfront:
     restart: always
-    container_name: cinemaccs_front
+    container_name: cinemaccsfront
     build: ./front
     # command: yarn start
     volumes:
@@ -42,22 +42,21 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - cinemaccs_db
-      - cinemaccs_api
+      - cinemaccsdb
+      - cinemaccsapi
     env_file:
       - .env
 
-  cinemaccs_dagster:
+  cinemaccsdagster:
     restart: always
-    container_name: cinemaccs_dagster
+    container_name: cinemaccsdagster
     build: ./scripts
     volumes:
       - ./scripts:/dagster
     ports:
       - "3010:3000"
     depends_on:
-      - cinemaccs_db
-      - cinemaccs_api
+      - cinemaccsapi
     env_file:
       - .env
 

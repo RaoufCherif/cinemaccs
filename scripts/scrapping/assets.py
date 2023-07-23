@@ -20,18 +20,14 @@ from .modules import (
     next_dates,
     get_sessions_theaters,
     extract_movie_id,
+    get_brand_url,
 )
 from .mappings import MAP_THEATER, remap_keys, MAP_MOVIE, MAP_SESSION
-import datetime
+from .config import mk2_home, all_movies, api_url, theaters_url
 import concurrent.futures
 
 
 logger = get_dagster_logger()
-mk2_home = "https://www.mk2.com"
-all_movies = "https://www.mk2.com/films/tous-les-films"
-api_url = "http://localhost:8000/api"
-movie_url = "https://prod-paris.api.mk2.com/films"
-theaters_url = "https://prod-paris.api.mk2.com/cinema-complex"
 
 
 @asset(group_name="all", description="Get MK2 DataKey")
@@ -58,8 +54,8 @@ def scrapeMK2Theaters(getMK2DataKey):
 
 
 @asset(group_name="theaters", description="Theaters dataframe to JSON")
-def jsonMK2Theaters(scrapeMK2Theaters):
-    scrapeMK2Theaters["company_name"] = "MK2"
+def jsonMK2Theaters(scrapeMK2Theaters, getBrands):
+    scrapeMK2Theaters["brand"] = get_brand_url(getBrands, "MK2")
     scrapeMK2Theaters.rename(columns=MAP_THEATER, inplace=True)
     df = scrapeMK2Theaters[MAP_THEATER.values()]  # To keep only renamed columns
     """
@@ -73,6 +69,13 @@ def jsonMK2Theaters(scrapeMK2Theaters):
 def uploadMK2Theaters(jsonMK2Theaters):
     r = requests.request("POST", f"{api_url}/theater/", data=jsonMK2Theaters)
     logger.info(r.text)
+
+
+@asset(group_name="brands", description="Get all theaters")
+def getBrands():
+    r = requests.request("GET", f"{api_url}/brands/")
+    logger.info(r.text)
+    return json.loads(r.text)
 
 
 @asset(group_name="sessions", description="Get sessions from theaters")
@@ -116,9 +119,9 @@ def getMK2TheatersSessions(scrapeMK2Theaters):
 
 
 @asset(group_name="sessions", description="Post sessions from theaters")
-def jsonMK2Sessions(getMK2TheatersSessions):
+def jsonMK2Sessions(getMK2TheatersSessions, getBrands):
     logger.info(getMK2TheatersSessions.to_json(orient="records"))
-    getMK2TheatersSessions["company_name"] = "MK2"
+    getMK2TheatersSessions["brand"] = get_brand_url(getBrands, "MK2")
     getMK2TheatersSessions.rename(columns=MAP_SESSION, inplace=True)
     df = getMK2TheatersSessions[MAP_SESSION.values()]  # To keep only renamed columns
     logger.info(df)
@@ -158,8 +161,8 @@ def scrapeMK2Movies(getMK2DataKey):
 
 
 @asset(group_name="movies", description="Movie dataframe to JSON")
-def jsonMK2Movies(scrapeMK2Movies):
-    scrapeMK2Movies["company_name"] = "MK2"
+def jsonMK2Movies(scrapeMK2Movies, getBrands):
+    scrapeMK2Movies["brand"] = get_brand_url(getBrands, "MK2")
     scrapeMK2Movies.rename(columns=MAP_MOVIE, inplace=True)
     df = scrapeMK2Movies[MAP_MOVIE.values()]  # To keep only renamed columns
     return df.to_json(orient="records")
