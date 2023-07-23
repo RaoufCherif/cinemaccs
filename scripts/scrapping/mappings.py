@@ -39,7 +39,9 @@ MAP_THEATER = {
     "allowOnlineVoucherValidation": "allow_on_line_voucher_validation",
     "displaySofaSeats": "display_sofa_seats",
     "timeZoneId": "time_zone_id",
+    "brand": "brand"
 }
+
 
 MAP_MOVIE = {
     "title": "title",
