@@ -98,7 +98,7 @@ export const MoviePage = () => {
             >
               {sessions ? (
                 sessions.map((session, idx) => (
-                  <Link href={`/rooms/${session.room_id}`} key={idx}>
+                  <Link href={`/salle/${session.room_id}`} key={idx}>
                     {session.theater_name} - {session.room_name}
                   </Link>
                 ))
